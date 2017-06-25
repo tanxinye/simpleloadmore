@@ -30,5 +30,6 @@ dependencies {
     testCompile 'junit:junit:4.12'
     compile 'com.android.support:appcompat-v7:24.2.1'
     compile 'com.android.support:design:24.2.0'
-    compile(name: 'simpleloadmore', ext: 'aar')
+    compile 'com.github.tanxinye:simpleloadmore:1.0.0'
+
 }

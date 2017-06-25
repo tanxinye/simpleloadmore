@@ -1,8 +1,8 @@
-package txy.simpleloadmore;
+package com.messcat.kaiwei.view.loadmore;
 
+import android.graphics.Color;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
-import android.view.View;
 
 /**
  * 控制RecyclerView、Adapter和FooterView
@@ -20,7 +20,7 @@ public final class LoadMoreControler {
         void onLoadMore();
     }
 
-    public LoadMoreControler(@NonNull RecyclerView recyclerView) {
+    public LoadMoreControler(@NonNull RecyclerView recyclerView, @NonNull Builder builder) {
         if (recyclerView == null) {
             throw new NullPointerException("RecyclerView must not mull");
         }
@@ -36,16 +36,18 @@ public final class LoadMoreControler {
                 int count = mAdapter.getItemCount();
                 if (count == loadMoreAdapter.getCount()) {
                     canLoadMore = false;
+                    loadMoreFooterView.showComplete();
                 } else {
                     loadMoreAdapter.changeCount(count);
                     loadMoreAdapter.notifyDataSetChanged();
+                    loadMoreFooterView.hide();
                 }
-                hideLoadMore();
+                loaded();
             }
         });
-        loadMoreFooterView = new LoadMoreFooterView(recyclerView.getContext());
+        loadMoreFooterView = new LoadMoreFooterView(recyclerView.getContext(), builder);
 
-        loadMoreAdapter = new LoadMoreAdapter(mAdapter,loadMoreFooterView);
+        loadMoreAdapter = new LoadMoreAdapter(mAdapter, loadMoreFooterView);
         mRecyclerView.setAdapter(loadMoreAdapter);
     }
 
@@ -56,6 +58,7 @@ public final class LoadMoreControler {
             public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
                 if (!recyclerView.canScrollVertically(1) && canLoadMore && !isLoading
                         && newState == RecyclerView.SCROLL_STATE_IDLE) {
+                    loadMoreFooterView.showLoading();
                     isLoading = true;
                     loadMoreAdapter.setLoadMore(true);
                     if (loadMoreListener != null) {
@@ -79,12 +82,41 @@ public final class LoadMoreControler {
         return isLoading;
     }
 
-    private void hideLoadMore() {
+    private void loaded() {
         loadMoreAdapter.setLoadMore(false);
         isLoading = false;
     }
 
-    public View generateLayout(int resId){
-        return loadMoreFooterView.generateLayout(resId);
+    public static class Builder {
+        private String completeText = "没有更多了";
+        private String loadingText = "正在加载...";
+        private int textColor = Color.parseColor("#000000");
+
+        public String getCompleteText() {
+            return completeText;
+        }
+
+        public Builder setCompleteText(String completeText) {
+            this.completeText = completeText;
+            return this;
+        }
+
+        public String getLoadingText() {
+            return loadingText;
+        }
+
+        public Builder setLoadingText(String loadingText) {
+            this.loadingText = loadingText;
+            return this;
+        }
+
+        public int getTextColor() {
+            return textColor;
+        }
+
+        public Builder setTextColor(int textColor) {
+            this.textColor = textColor;
+            return this;
+        }
     }
 }
