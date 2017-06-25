@@ -1,4 +1,4 @@
-﻿package txy.simpleloadmore;
+package txy.simpleloadmore;
 
 import android.content.Context;
 import android.util.AttributeSet;

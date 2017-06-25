@@ -1,4 +1,4 @@
-﻿package txy.simpleloadmore;
+package txy.simpleloadmore;
 
 import android.graphics.Color;
 import android.support.annotation.NonNull;
