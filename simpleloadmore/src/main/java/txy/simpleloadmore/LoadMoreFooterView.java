@@ -1,4 +1,4 @@
-package com.messcat.kaiwei.view.loadmore;
+﻿package txy.simpleloadmore;
 
 import android.content.Context;
 import android.util.AttributeSet;

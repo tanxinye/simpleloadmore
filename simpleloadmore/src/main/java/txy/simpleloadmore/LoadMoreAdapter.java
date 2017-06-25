@@ -1,4 +1,4 @@
-package com.messcat.kaiwei.view.loadmore;
+﻿package txy.simpleloadmore;
 
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
